@@ -7,16 +7,12 @@
  * Повертає випадковий пароль.
  */
 function generateRandomPassword(length) {
-  let random;
-  let password = '';
-  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for(let i = 0; i < characters.length; i++) { 
-    for(let j = 0; j < length; j++){
-    random = Math.random(characters[j]);
-    password = Math.ceil(random);
-    
-  } 
-  
+  let password = "";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for(let i = 0; i < length; i++) { 
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    const randomCharacter = characters.charAt(randomIndex);
+    password += randomCharacter;
     } 
     return password;
   // Створюємо порожній рядок для збереження паролю.
