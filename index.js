@@ -8,17 +8,17 @@
  */
 function generateRandomPassword(length) {
   let random;
-  let int;
   let password = '';
-  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for(let i = 0; i < characters.length; i++) {
-    random = Math.random(i);
-    int = Math.floor(random);
-    for(let j = 0; j < length; j++) {
-      password = int[j];
-      return password;
+  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for(let i = 0; i < characters.length; i++) { 
+    for(let j = 0; j < length; j++){
+    random = Math.random(characters[j]);
+    password = Math.ceil(random);
+    
+  } 
+  
     } 
-  }
+    return password;
   // Створюємо порожній рядок для збереження паролю.
   // Створюємо рядок characters "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" з доступних символів для паролю.
   // За допомогою циклу for проходимось по кожному символу рядка characters
@@ -122,21 +122,19 @@ console.log(calculateHypotenuse(3, 4));
  *  Поверне: Об'єкт з заокругленими значеннями числових властивостей.
  */
 function roundObjectValues(obj) {
-  if(!Object(obj)) {
+  if(typeof obj !== "object" || obj === null) {
     return null;
   }
-  let floor1 = 0;
-  let newobj = {};
-  let obj1 = Object.entries(obj);
-  const map1 = obj1.map(value => {
+  let entries = Object.entries(obj);
+  const roundedEntries = entries.map(([key, value]) => {
     if(typeof value === "number") {
-      obj1 = Math.round(value);
+      return [key, Math.round(value)];
     } else {
-      obj1 = [value];
+       return [key, value];
     }
-  })
-  newobj = Object.fromEntries(obj1);
-  return newobj;
+  });
+  const roundedObj = Object.fromEntries(roundedEntries);
+  return roundedObj;
   // Перевіряємо, чи аргумент є об'єктом.
   // Також перевіряємо, що аргумент не є null.
   // Якщо аргумент не є об'єктом або є null, виводимо повідомлення "Помилка: аргумент має бути об'єктом".
@@ -313,19 +311,20 @@ console.log(estimateInvestment(1000, 0.05, 5));
  * Повертає чи перевищує totalPrice maxPrice.
  */
 function isTotalPriceExceedsMaxPrice(products, maxPrice) {
-  if(!Array(products)) {
+  if(!Array.isArray(products)) {
+    console.log("Помилка: аргумент 'products' має бути масивом");
     return null;
   }
-  let sum = 0;
-  let totalPrice = 0;
-  if(!typeof maxPrice === "number") {
+  if(typeof maxPrice !== "number") {
+    console.log("Помилка: аргумент 'maxPrice' має бути числом");
     return null;
-  } else {
-    sum = products.reduce(price => {
-      totalPrice = totalPrice + price;
-    })
-  }
-  return totalPrice;
+  } 
+  let totalPrice = products.reduce((accumulator, product) => {
+    return accumulator + product.price;
+  }, 0);
+  totalPrice = Math.fround(totalPrice);
+  maxPrice = Math.fround(maxPrice);
+  return totalPrice > maxPrice;
   // Перевіряємо, чи аргумент products є масивом.
   // Якщо products не є масивом, виводимо повідомлення про помилку.
   // Повертаємо null, що свідчить про неможливість обробки вхідних даних.
